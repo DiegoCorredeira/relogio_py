@@ -4,6 +4,15 @@ import datetime
 import requests
 import json
 def get_temperature(city):
+
+    """
+    Obtém a temperatura atual de uma determinada cidade.
+
+    Args:
+    city: (str) Nome da cidade a ser consultada.
+    Returns:
+        float: Temperatura atual da cidade em graus Celsius.
+    """
     api_key = "ecd5fbb0fa903393a75e997e06e2e184"
     url = f"http://api.weatherstack.com/current?access_key={api_key}&query={city}"
     response = requests.get(url)
@@ -15,29 +24,54 @@ def get_temperature(city):
         return None
 
 def show_temperature():
+    """
+    Exibe a temperatuda da cidade informada no campo info_label.
+    Params: 
+        None
+    Returns:
+        None
+    """
     city = city_entry.get().capitalize()
     temperature = get_temperature(city)
     if temperature is not None:
-        info_label.configure(text=f'Temperatura em {city}: {temperature}°C')
+        info_label.configure(text=f'{temperature}°C')
     else:
-        info_label.configure(text=f"Temperatura em {city} não encontrada")
+        info_label.configure(text=f"Cidade não encontrada: {city}")
 
 
 
 def update_clock():
+    """
+    Atualiza o relógio digital a cada 1 segundo.
+    Params:
+        None
+    Returns:
+        None
+
+    """
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
     clock_label.configure(text=current_time)
     clock_label.after(1000, update_clock)
 
 def show_day_of_week():
-    # pegar todos os dias da semana
+    """Exibe o dia da semana atual no campo info_label.
+    Params:
+        None
+    Returns:
+        None
+    """
     days_of_week = ["Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado", "Domingo"]
-    # pegar o dia da semana atual
     current_day = datetime.datetime.now().weekday()
     days_of_week = days_of_week[current_day]
     info_label.config(text=f"Dia da semana: {days_of_week}")
 
 def show_date():
+    """Exibe a data atual no campo info_label.
+    Params:
+        None
+    Returns:
+        None
+    """
     current_date = datetime.datetime.now().strftime("%d/%m/%Y")
     info_label.config(text=f"Data: {current_date}")
 
